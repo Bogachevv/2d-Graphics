@@ -30,6 +30,14 @@ void screen::clear() {
     std::memset(buffer, 0, width*height);
 }
 
+uint32_t screen::get_width() const{
+    return width;
+}
+
+uint32_t screen::get_height() const{
+    return height;
+}
+
 screen::~screen() {
     delete[] buffer;
 }

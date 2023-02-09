@@ -19,6 +19,10 @@ public:
 
     virtual void redraw() = 0;
 
+    uint32_t get_width() const;
+
+    uint32_t get_height() const;
+
     void clear();
 
     ~screen();

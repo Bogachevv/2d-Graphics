@@ -51,3 +51,27 @@ void win_console::draw(char *buf, uint32_t width, uint32_t height) {
     }
 
 }
+
+void win_console::set_cursor(uint32_t x, uint32_t y) {
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    _COORD coord = {(short)x, (short)y};
+    int ret = SetConsoleCursorPosition(handle, coord);
+
+    if (ret == 0){
+        throw std::runtime_error("Set cursor error");
+    }
+}
+
+void win_console::hide_cursor() {
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO cInfo = {100, FALSE};
+
+    int ret = SetConsoleCursorInfo(handle, &cInfo);
+
+    if (ret == 0){
+        throw std::runtime_error("Hide cursor error");
+    }
+
+}

@@ -7,10 +7,15 @@ win_screen::win_screen() {
 
     buffer = new uint8_t[width*height];
     memset(buffer, ' ', width*height*sizeof(uint8_t));
+
+    win_console::set_cursor(width, height);
+    win_console::hide_cursor();
 }
 
 win_screen::win_screen(uint32_t width, uint32_t height) : screen(width, height) {
     win_console::resize(width, height);
+    win_console::set_cursor(width - 1, height - 1);
+    win_console::hide_cursor();
 }
 
 void win_screen::redraw() {
