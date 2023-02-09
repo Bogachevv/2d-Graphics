@@ -1,0 +1,71 @@
+#pragma once
+
+#include "./complex.h"
+
+class figure {
+protected:
+    complex center_;
+
+    figure();
+
+    explicit figure(complex center);
+
+public:
+    virtual void move(complex vec) = 0;
+
+    virtual void stretch(double alpha) = 0;
+
+    virtual void rotate(double alpha) = 0;
+
+    virtual void transform(complex &alpha) = 0;
+
+    virtual void draw() = 0;
+
+};
+
+class circle:figure{
+protected:
+    double radius_;
+
+public:
+    circle(complex center, double radius);
+
+    void move(complex vec) override;
+
+    void stretch(double alpha) override;
+
+    void rotate(double alpha) override;
+
+    void transform(complex &alpha) override;
+
+    void draw() override;
+};
+
+class base_rectangle:figure{
+protected:
+    complex lu, ld, ru, rd; //left upper corner, right upper corner, ...
+    base_rectangle(complex center, double width, double height);
+
+public:
+    void move(complex vec) override;
+
+    void stretch(double alpha) override;
+
+    void rotate(double alpha) override;
+
+    void transform(complex &alpha) override;
+
+    void draw() override;
+};
+
+class rectangle:base_rectangle{
+public:
+    rectangle(complex center, double width, double height);
+    void stretch(double width_k, double height_h);
+
+};
+
+class square:base_rectangle{
+public:
+    square(complex center, double a);
+};
