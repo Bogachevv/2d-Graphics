@@ -1,7 +1,6 @@
 #include <iostream>
-#include <chrono>
-#include <thread>
 #include <cmath>
+#include <windows.h>
 
 #include "screen.h"
 #include "win/win_screen.h"
@@ -35,21 +34,12 @@ int main() {
 
     win_screen scr = win_screen(120, 50);
 
-//    for (int i = 5; i < 25; ++i){
-//        scr.update(i, i, '*');
-//    }
-//
-//    scr.redraw();
-//
-//
-//    std::this_thread::sleep_for(std::chrono::seconds(2));
-
-    for (uint32_t t = 0; t < 1000; ++t){
-        draw_circle(scr, sin(t / (2.0*M_PI)), 0.0);
-        std::this_thread::sleep_for(std::chrono::milliseconds (250));
+    for (uint32_t t = 0; t < 10000; ++t){
+        draw_circle(scr, sin(t / (2.0*M_PI * 10.0)), 0.0);
+        Sleep(50);
     }
 
-    std::this_thread::sleep_for(std::chrono::seconds(500));
+    Sleep(50000);
 
     return 0;
 }
