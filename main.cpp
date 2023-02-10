@@ -5,6 +5,7 @@
 #include "screen.h"
 #include "win/win_screen.h"
 #include "./complex.h"
+#include "./figures.h"
 
 void draw_circle(screen &scr, double x_c, double y_c){
     double r = 0.25;
@@ -29,7 +30,8 @@ void draw_circle(screen &scr, double x_c, double y_c){
 
     scr.redraw();
 }
-
+//TODO:
+// fix complex arg
 void test_complex(){
     complex c1(1, 0);
 
@@ -42,12 +44,18 @@ void test_complex(){
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    test_complex();
+//    test_complex();
 
-    win_screen scr = win_screen(120, 30);
+    win_screen scr = win_screen(120, 50);
+    circle c = circle(0.0, 0.25);
 
     for (uint32_t t = 0; t < 10000; ++t){
-        draw_circle(scr, sin(t / (2.0*M_PI * 10.0)), 0.0);
+//        draw_circle(scr, sin(t / (2.0*M_PI * 10.0)), 0.0);
+        scr.clear();
+        c.move_to({0.5 * sin(t / (2.0*M_PI * 10.0)), 0.5 * cos(t / (2.0*M_PI * 10.0))});
+        c.draw(scr);
+        scr.redraw();
+
         Sleep(50);
     }
 

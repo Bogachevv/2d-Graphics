@@ -1,6 +1,7 @@
 #pragma once
 
 #include "./complex.h"
+#include "./screen.h"
 
 class figure {
 protected:
@@ -13,13 +14,17 @@ protected:
 public:
     virtual void move(complex vec) = 0;
 
+    virtual void move_to(complex vec) = 0;
+
     virtual void stretch(double alpha) = 0;
 
     virtual void rotate(double alpha) = 0;
 
-    virtual void transform(complex &alpha) = 0;
+    virtual void transform(complex alpha) = 0;
 
-    virtual void draw() = 0;
+    //TODO:
+    // Move screen to the scene
+    virtual void draw(screen &scr) = 0;
 
 };
 
@@ -32,13 +37,15 @@ public:
 
     void move(complex vec) override;
 
+    void move_to(complex vec) override;
+
     void stretch(double alpha) override;
 
     void rotate(double alpha) override;
 
-    void transform(complex &alpha) override;
+    void transform(complex alpha) override;
 
-    void draw() override;
+    void draw(screen &scr) override;
 };
 
 class base_rectangle:figure{
@@ -61,13 +68,15 @@ protected:
 public:
     void move(complex vec) override;
 
+    void move_to(complex vec) override;
+
     void stretch(double alpha) override;
 
     void rotate(double alpha) override;
 
-    void transform(complex &alpha) override;
+    void transform(complex alpha) override;
 
-    void draw() override;
+    void draw(screen &scr) override;
 };
 
 class rectangle:base_rectangle{
