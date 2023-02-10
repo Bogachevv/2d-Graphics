@@ -28,7 +28,7 @@ public:
 
 };
 
-class circle:figure{
+class circle: public figure{
 protected:
     double radius_;
 
@@ -48,7 +48,7 @@ public:
     void draw(screen &scr) override;
 };
 
-class base_rectangle:figure{
+class base_rectangle: public figure{
 protected:
     complex lu; //left-upper corner
     complex lu_ru; //left-upper --> right-upper
@@ -79,7 +79,7 @@ public:
     void draw(screen &scr) override;
 };
 
-class rectangle:base_rectangle{
+class rectangle: public base_rectangle{
 public:
     rectangle(complex center, double width, double height);
     void stretch(double width_k, double height_h);

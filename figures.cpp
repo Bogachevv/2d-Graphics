@@ -47,9 +47,9 @@ void circle::draw(screen &scr) {
 }
 
 base_rectangle::base_rectangle(complex center, double width, double height) : figure(center) {
-    lu = center - (width / 2.0) + (height / 2.0);
-    lu_ru = lu + complex(width, 0.0);
-    lu_ld = lu + complex(0.0, -height);
+    lu = center - complex((width / 2.0), -(height / 2.0));
+    lu_ru = complex(width, 0.0);
+    lu_ld = complex(0.0, -height);
 }
 
 void base_rectangle::move(complex vec) {
@@ -78,7 +78,26 @@ void base_rectangle::transform(complex alpha) {
 }
 
 void base_rectangle::draw(screen &scr) {
+    double aspect = ((double)scr.get_width()) / scr.get_height();
+    aspect *= 8.0 / 16.0;
 
+    for (uint32_t i = 0; i < scr.get_height(); ++i){ // y coord
+        for (uint32_t j = 0; j < scr.get_width(); ++j){ // x coord
+            double x = ((double)j) / scr.get_width()  * 2.0 - 1.0;
+            double y = ((double)i) / scr.get_height() * 2.0 - 1.0;
+            x *= aspect;
+
+            complex point = {x, y};
+            point -= lu;
+            double lu_ru_comp = lu_ru.dot(point);
+            double lu_ld_comp = lu_ld.dot(point);
+
+            if ((0 <= lu_ru_comp) and (lu_ru_comp <= lu_ru.abs())
+            and (0 <= lu_ld_comp) and (lu_ld_comp <= lu_ld.abs())){
+                scr.update(j, i, '*');
+            }
+        }
+    }
 }
 
 rectangle::rectangle(complex center, double width, double height)

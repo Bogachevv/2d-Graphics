@@ -47,13 +47,14 @@ int main() {
 //    test_complex();
 
     win_screen scr = win_screen(120, 50);
-    circle c = circle(0.0, 0.25);
+    rectangle rect = rectangle({0.0, 0.0}, 0.8, 0.8);
 
     for (uint32_t t = 0; t < 10000; ++t){
 //        draw_circle(scr, sin(t / (2.0*M_PI * 10.0)), 0.0);
         scr.clear();
-        c.move_to({0.5 * sin(t / (2.0*M_PI * 10.0)), 0.5 * cos(t / (2.0*M_PI * 10.0))});
-        c.draw(scr);
+
+        rect.draw(scr);
+
         scr.redraw();
 
         Sleep(50);
