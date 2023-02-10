@@ -31,12 +31,12 @@ void draw_circle(screen &scr, double x_c, double y_c){
     scr.redraw();
 }
 //TODO:
-// fix complex arg
+// Test complex arg
 void test_complex(){
-    complex c1(1, 0);
+    complex c1(-1, 0);
 
     std::cout << c1 << std::endl;
-    std::cout << c1.abs() << ", " << c1.arg() << std::endl;
+    std::cout << "|z| = " << c1.abs() << ", arg(z) = " << c1.arg() << std::endl;
 
     exit(0);
 }
@@ -47,12 +47,13 @@ int main() {
 //    test_complex();
 
     win_screen scr = win_screen(120, 50);
-    rectangle rect = rectangle({0.0, 0.0}, 0.8, 0.8);
+    rectangle rect = rectangle({0.3, -0.3}, 0.6, 0.6);
 
     for (uint32_t t = 0; t < 10000; ++t){
 //        draw_circle(scr, sin(t / (2.0*M_PI * 10.0)), 0.0);
         scr.clear();
 
+        rect.rotate(0.1);
         rect.draw(scr);
 
         scr.redraw();

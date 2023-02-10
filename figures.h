@@ -48,6 +48,10 @@ public:
     void draw(screen &scr) override;
 };
 
+//TODO:
+// rewrite base_rectangle:
+//      delete lu corner, use only center
+
 class base_rectangle: public figure{
 protected:
     complex lu; //left-upper corner

@@ -68,8 +68,8 @@ void base_rectangle::stretch(double alpha) {
 }
 
 void base_rectangle::rotate(double alpha) {
-    lu_ru *= complex::cexp(0.0, alpha);
-    lu_ld *= complex::cexp(0.0, alpha);
+    lu_ru *= complex::cexp(1.0, alpha);
+    lu_ld *= complex::cexp(1.0, alpha);
 }
 
 void base_rectangle::transform(complex alpha) {

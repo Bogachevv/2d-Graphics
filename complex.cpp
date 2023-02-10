@@ -22,7 +22,7 @@ complex complex::cexp(const complex &z) {
 
 void complex::update_polar() {
     abs_ = sqrt(re_*re_ + im_*im_);
-    arg_ = (abs_ == 0 ? 0.0 : atan(re_ / im_));
+    arg_ = atan2(im_, re_);
 }
 
 void complex::update_cartesian() {
