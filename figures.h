@@ -43,7 +43,19 @@ public:
 
 class base_rectangle:figure{
 protected:
-    complex lu, ld, ru, rd; //left upper corner, right upper corner, ...
+    complex lu; //left-upper corner
+    complex lu_ru; //left-upper --> right-upper
+    complex lu_ld; //left-upper --> left-down
+
+    /*
+     *         lu_ru
+     * lu --------------> ru
+     *  |                  |
+     *  |                  |  lu_ld
+     *  |                  |
+     * ld --------------> rd
+     */
+
     base_rectangle(complex center, double width, double height);
 
 public:

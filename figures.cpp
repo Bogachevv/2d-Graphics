@@ -22,34 +22,38 @@ void circle::transform(complex &alpha) {
     stretch(alpha.abs());
 }
 
+void circle::draw() {
+
+}
+
 base_rectangle::base_rectangle(complex center, double width, double height) : figure(center) {
     lu = center - (width / 2.0) + (height / 2.0);
-    ru = center + (width / 2.0) + (height / 2.0);
-    ld = center - (width / 2.0) - (height / 2.0);
-    rd = center + (width / 2.0) - (height / 2.0);
+    lu_ru = lu + complex(width, 0.0);
+    lu_ld = lu + complex(0.0, -height);
 }
 
 void base_rectangle::move(complex vec) {
     center_ += vec;
     lu += vec;
-    ru += vec;
-    ld += vec;
-    rd += vec;
 }
 
 void base_rectangle::stretch(double alpha) {
-    //TODO:
-    // implement base_rectangle::stretch
+    lu_ru *= alpha;
+    lu_ld *= alpha;
 }
 
 void base_rectangle::rotate(double alpha) {
-    //TODO:
-    // implement base_rectangle::rotate
+    lu_ru *= complex::cexp(0.0, alpha);
+    lu_ld *= complex::cexp(0.0, alpha);
 }
 
 void base_rectangle::transform(complex &alpha) {
-    //TODO:
-    // implement base_rectangle::transform
+    lu_ru *= alpha;
+    lu_ld *= alpha;
+}
+
+void base_rectangle::draw() {
+
 }
 
 rectangle::rectangle(complex center, double width, double height)
@@ -59,8 +63,8 @@ rectangle::rectangle(complex center, double width, double height)
 }
 
 void rectangle::stretch(double width_k, double height_h) {
-    //TODO:
-    // implement rectangle::stretch
+    lu_ru *= width_k;
+    lu_ld *= height_h;
 }
 
 square::square(complex center, double a)

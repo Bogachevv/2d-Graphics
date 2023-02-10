@@ -3,18 +3,10 @@
 
 #include "./complex.h"
 
-//TODO:
-// rewrite complex
-
 complex::complex(double re, double im) {
     re_ = re;
     im_ = im;
-    valid_cartesian_ = true;
-
-    abs_ = sqrt(re*re + im*im);
-    arg_ = (abs_ == 0.0 ? 0.0 : atan(im / re));
-    valid_polar_ = true;
-
+    update_polar();
 }
 
 complex complex::cexp(double re, double im) {
@@ -28,69 +20,106 @@ complex complex::cexp(const complex &z) {
     return cexp(z.re_, z.im_);
 }
 
-void complex::calc_cartesian() {
-    if (valid_cartesian_) return;
-    if (not valid_polar_) throw std::runtime_error("Complex error: not valid object");
+void complex::update_polar() {
+    abs_ = sqrt(re_*re_ + im_*im_);
+    arg_ = (abs_ == 0 ? 0.0 : atan(re_ / im_));
+}
 
+void complex::update_cartesian() {
     re_ = abs_ * cos(arg_);
     im_ = abs_ * sin(arg_);
-    valid_cartesian_ = true;
-}
-
-void complex::calc_polar() {
-    if (valid_polar_) return;
-    if (not valid_cartesian_) throw std::runtime_error("Complex error: not valid object");
-
-    abs_ = sqrt(re_*re_ + im_*im_);
-    arg_ = (abs_ == 0 ? 0.0 :atan(im_ / re_));
-    valid_polar_ = true;
-}
-
-double complex::re() {
-    calc_cartesian();
-    return re_;
-}
-
-double complex::im() {
-    calc_cartesian();
-    return im_;
 }
 
 void complex::set_re(double re) {
-    calc_cartesian();
     re_ = re;
-    valid_polar_ = false;
+    update_polar();
 }
 
 void complex::set_im(double im) {
-    calc_cartesian();
     im_ = im;
-    valid_polar_ = false;
-}
-
-double complex::abs() {
-    calc_polar();
-    return abs_;
-}
-
-double complex::arg() {
-    calc_polar();
-    return arg_;
+    update_polar();
 }
 
 void complex::set_abs(double abs) {
-    calc_polar();
     abs_ = abs;
-    valid_cartesian_ = false;
+    update_cartesian();
 }
 
 void complex::set_arg(double arg) {
-    calc_polar();
     arg_ = arg;
-    valid_cartesian_ = false;
+    update_cartesian();
+}
+
+double complex::dot(complex &other) const{
+    return sqrt(re_*other.re_ + im_*other.im_);
+}
+
+double dot(complex &left, complex &right) {
+    return sqrt(left.re_ * right.re_ + left.im_ * right.im_);
 }
 
 complex operator+(const complex &left, const complex &right) {
-
+    return {left.re_ + right.re_, left.im_ + right.im_};
 }
 
+complex operator-(const complex &left, const complex &right) {
+    return {left.re_ - right.re_, left.im_ - right.im_};
+}
+
+complex operator*(const complex &left, const complex &right) {
+    complex res;
+    res.abs_ = left.abs_ * right.abs_;
+    res.arg_ = left.arg_ + right.arg_;
+    res.update_cartesian();
+
+    return res;
+}
+
+complex operator/(const complex &left, const complex &right) {
+    if (right.abs_ == 0.0) throw std::runtime_error("Complex: division zero");
+
+    complex res;
+    res.abs_ = left.abs_ / right.abs_;
+    res.arg_ = left.arg_ - right.arg_;
+    res.update_cartesian();
+
+    return res;
+}
+
+const complex& complex::operator+=(const complex &other) {
+    re_ += other.re_;
+    im_ += other.im_;
+
+    return *this;
+}
+
+const complex& complex::operator-=(const complex &other) {
+    re_ -= other.re_;
+    im_ -= other.im_;
+
+    return *this;
+}
+
+const complex& complex::operator*=(const complex &other) {
+    abs_ *= other.abs_;
+    arg_ += other.arg_;
+    update_cartesian();
+
+    return *this;
+}
+
+const complex& complex::operator/=(const complex &other) {
+    if (other.abs_ == 0.0) throw std::runtime_error("Complex: division zero");
+
+    abs_ /= other.abs_;
+    arg_ -= other.arg_;
+    update_cartesian();
+
+    return *this;
+}
+
+std::ostream &operator<<(std::ostream &ostream, const complex &val) {
+    ostream << val.re_ << " + "  << val.im_ << "i";
+
+    return ostream;
+}
