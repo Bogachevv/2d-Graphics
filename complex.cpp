@@ -3,7 +3,7 @@
 
 #include "./complex.h"
 
-complex::complex(double re, double im) {
+complex::complex(double re, double im) : abs_(0), arg_(0) {
     re_ = re;
     im_ = im;
     update_polar();
@@ -51,11 +51,11 @@ void complex::set_arg(double arg) {
 }
 
 double complex::dot(complex &other) const{
-    return sqrt(re_*other.re_ + im_*other.im_);
+    return re_*other.re_ + im_*other.im_;
 }
 
 double dot(complex &left, complex &right) {
-    return sqrt(left.re_ * right.re_ + left.im_ * right.im_);
+    return left.re_ * right.re_ + left.im_ * right.im_;
 }
 
 complex operator+(const complex &left, const complex &right) {

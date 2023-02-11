@@ -48,21 +48,20 @@ public:
     void draw(screen &scr) override;
 };
 
-//TODO:
-// rewrite base_rectangle:
-//      delete lu corner, use only center
 
 class base_rectangle: public figure{
 protected:
-    complex lu; //left-upper corner
-    complex lu_ru; //left-upper --> right-upper
-    complex lu_ld; //left-upper --> left-down
+    complex x_, y_; //left-upper --> right-upper
 
     /*
-     *         lu_ru
+     *
      * lu --------------> ru
+     *  |        ↑         |
+     *  |      y |         |
+     *  |        |    x    |
+     *  |        *  -----→ |
      *  |                  |
-     *  |                  |  lu_ld
+     *  |                  |
      *  |                  |
      * ld --------------> rd
      */
@@ -87,6 +86,9 @@ class rectangle: public base_rectangle{
 public:
     rectangle(complex center, double width, double height);
     void stretch(double width_k, double height_h);
+
+    void set_width(double width);
+    void set_height(double height);
 
 };
 

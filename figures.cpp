@@ -30,8 +30,8 @@ void circle::draw(screen &scr) {
     double aspect = ((double)scr.get_width()) / scr.get_height();
     aspect *= 8.0 / 16.0;
 
-    for (uint32_t i = 0; i < scr.get_height(); ++i){ // y coord
-        for (uint32_t j = 0; j < scr.get_width(); ++j){ // x coord
+    for (uint32_t i = 0; i < scr.get_height(); ++i){ // y_ coord
+        for (uint32_t j = 0; j < scr.get_width(); ++j){ // x_ coord
             double x = ((double)j) / scr.get_width()  * 2.0 - 1.0;
             double y = ((double)i) / scr.get_height() * 2.0 - 1.0;
             x *= aspect;
@@ -47,53 +47,51 @@ void circle::draw(screen &scr) {
 }
 
 base_rectangle::base_rectangle(complex center, double width, double height) : figure(center) {
-    lu = center - complex((width / 2.0), -(height / 2.0));
-    lu_ru = complex(width, 0.0);
-    lu_ld = complex(0.0, -height);
+    x_ = complex(width / 2.0, 0.0);
+    y_ = complex(0.0, -height / 2.0);
 }
 
 void base_rectangle::move(complex vec) {
     center_ += vec;
-    lu += vec;
 }
 
 void base_rectangle::move_to(complex vec) {
     center_ = vec;
-    lu = vec;
 }
 
 void base_rectangle::stretch(double alpha) {
-    lu_ru *= alpha;
-    lu_ld *= alpha;
+    x_ *= alpha;
+    y_ *= alpha;
 }
 
 void base_rectangle::rotate(double alpha) {
-    lu_ru *= complex::cexp(1.0, alpha);
-    lu_ld *= complex::cexp(1.0, alpha);
+    x_ *= complex::cexp(1.0, alpha);
+    y_ *= complex::cexp(1.0, alpha);
 }
 
 void base_rectangle::transform(complex alpha) {
-    lu_ru *= alpha;
-    lu_ld *= alpha;
+    x_ *= alpha;
+    y_ *= alpha;
 }
 
 void base_rectangle::draw(screen &scr) {
+//    double  aspect = 1.0;
     double aspect = ((double)scr.get_width()) / scr.get_height();
     aspect *= 8.0 / 16.0;
 
-    for (uint32_t i = 0; i < scr.get_height(); ++i){ // y coord
+    for (uint32_t i = 0; i < scr.get_height(); ++i){ // y_ coord
         for (uint32_t j = 0; j < scr.get_width(); ++j){ // x coord
             double x = ((double)j) / scr.get_width()  * 2.0 - 1.0;
             double y = ((double)i) / scr.get_height() * 2.0 - 1.0;
             x *= aspect;
 
             complex point = {x, y};
-            point -= lu;
-            double lu_ru_comp = lu_ru.dot(point);
-            double lu_ld_comp = lu_ld.dot(point);
+            point -= center_;
+            double x_comp = x_.dot(point);
+            double y_comp = y_.dot(point);
 
-            if ((0 <= lu_ru_comp) and (lu_ru_comp <= lu_ru.abs())
-            and (0 <= lu_ld_comp) and (lu_ld_comp <= lu_ld.abs())){
+            if ((std::abs(x_comp) <= x_.abs() * x_.abs())
+            and (std::abs(y_comp) <= y_.abs() * y_.abs())){
                 scr.update(j, i, '*');
             }
         }
@@ -107,8 +105,16 @@ rectangle::rectangle(complex center, double width, double height)
 }
 
 void rectangle::stretch(double width_k, double height_h) {
-    lu_ru *= width_k;
-    lu_ld *= height_h;
+    x_ *= width_k;
+    y_ *= height_h;
+}
+
+void rectangle::set_width(double width) {
+    x_.set_abs(width / 2.0);
+}
+
+void rectangle::set_height(double height) {
+    y_.set_abs(height / 2.0);
 }
 
 square::square(complex center, double a)
