@@ -22,17 +22,23 @@ public:
 
     virtual void transform(complex alpha) = 0;
 
-    //TODO:
-    // Move screen to the scene
     virtual void draw(screen &scr) = 0;
 
+    virtual ~figure() = default;
+
 };
+
+enum class figures {
+    circle, rectangle, square
+};
+
 
 class circle: public figure{
 protected:
     double radius_;
 
 public:
+    circle();
     circle(complex center, double radius);
 
     void move(complex vec) override;
@@ -46,6 +52,9 @@ public:
     void transform(complex alpha) override;
 
     void draw(screen &scr) override;
+
+//    ~circle() override = default;
+
 };
 
 
@@ -84,6 +93,7 @@ public:
 
 class rectangle: public base_rectangle{
 public:
+    rectangle();
     rectangle(complex center, double width, double height);
     void stretch(double width_k, double height_h);
 
@@ -94,5 +104,6 @@ public:
 
 class square:base_rectangle{
 public:
+    square();
     square(complex center, double a);
 };

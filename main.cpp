@@ -6,6 +6,7 @@
 #include "win/win_screen.h"
 #include "./complex.h"
 #include "./figures.h"
+#include "./scene.h"
 
 void draw_circle(screen &scr, double x_c, double y_c){
     double r = 0.25;
@@ -30,36 +31,29 @@ void draw_circle(screen &scr, double x_c, double y_c){
 
     scr.redraw();
 }
-//TODO:
-// Test complex arg
-void test_complex(){
-    complex c1(-1, 0);
-
-    std::cout << c1 << std::endl;
-    std::cout << "|z| = " << c1.abs() << ", arg(z) = " << c1.arg() << std::endl;
-
-    exit(0);
-}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-//    test_complex();
-
     win_screen scr = win_screen(120, 50);
-    rectangle rect = rectangle({0.0, 0.0}, 1.0, 1.0);
+    scene scn = scene(scr);
+    scn.reg_figure<rectangle>(figures::rectangle);
+
+    auto &rect = dynamic_cast<rectangle&>(scn.add_figure(figures::rectangle));
+    rect.move_to({0.0, 0.0});
+    rect.set_width(1.0);
+    rect.set_height(1.0);
+
 
     for (uint32_t t = 0; t < 10000; ++t){
 //        draw_circle(scr, sin(t / (2.0*M_PI * 10.0)), 0.0);
-        scr.clear();
 
         rect.rotate(0.1);
         rect.set_width(1 + 0.9 * sin(t / (2.0*M_PI * 2.0)));
         rect.set_height(1 + 0.9 * sin(t / (2.0*M_PI * 2.0)));
-        rect.draw(scr);
+//        rect.draw(scr);
 
-        scr.redraw();
-
+        scn.redraw_frame();
         Sleep(50);
     }
 

@@ -5,6 +5,8 @@ figure::figure() : center_() {}
 figure::figure(complex center) : center_(center) {}
 
 circle::circle(complex center, double radius) : figure(center), radius_(radius) {}
+circle::circle()
+: figure({0.0, 0.0}), radius_(1.0) {}
 
 void circle::move(complex vec) {
     center_ = center_ + vec;
@@ -104,6 +106,12 @@ rectangle::rectangle(complex center, double width, double height)
 
 }
 
+rectangle::rectangle()
+: base_rectangle({0.0, 0.0}, 1.0, 1.0)
+{
+
+}
+
 void rectangle::stretch(double width_k, double height_h) {
     x_ *= width_k;
     y_ *= height_h;
@@ -119,6 +127,12 @@ void rectangle::set_height(double height) {
 
 square::square(complex center, double a)
 : base_rectangle(center, a, a)
+{
+
+}
+
+square::square()
+: base_rectangle({0.0, 0.0}, 1.0, 1.0)
 {
 
 }
