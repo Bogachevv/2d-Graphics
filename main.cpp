@@ -1,9 +1,8 @@
 #include <iostream>
 #include <cmath>
-#include <windows.h>
 
-#include "screen.h"
-#include "win/win_screen.h"
+#include "./includes.h"
+#include "./screen.h"
 #include "./complex.h"
 #include "./figures.h"
 #include "./scene.h"
@@ -35,7 +34,11 @@ void draw_circle(screen &scr, double x_c, double y_c){
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
+#ifdef _WIN32
     win_screen scr = win_screen(120, 50);
+#else
+    linux_screen scr = linux_screen();
+#endif
     scene scn = scene(scr);
     scn.reg_figure<rectangle>(figures::rectangle);
 
@@ -54,10 +57,10 @@ int main() {
 //        rect.draw(scr);
 
         scn.redraw_frame();
-        Sleep(50);
+        sleep(50);
     }
 
-    Sleep(50000);
+    sleep(50000);
 
     return 0;
 }
