@@ -6,7 +6,7 @@
 linux_screen::linux_screen() {
     initscr();
 
-    getmaxyx(stdscr, width, height);
+    getmaxyx(stdscr, height, width);
     buffer = new uint8_t[width*height];
     memset(buffer, ' ', width*height*sizeof(uint8_t));
 }

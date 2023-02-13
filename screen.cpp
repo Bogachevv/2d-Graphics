@@ -27,15 +27,7 @@ void screen::update(uint32_t x, uint32_t y, uint8_t val) {
 }
 
 void screen::clear() {
-    std::memset(buffer, 0, width*height);
-}
-
-uint32_t screen::get_width() const{
-    return width;
-}
-
-uint32_t screen::get_height() const{
-    return height;
+    std::memset(buffer, ' ', width*height);
 }
 
 screen::~screen() {
