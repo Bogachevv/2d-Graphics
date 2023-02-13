@@ -7,6 +7,7 @@
 class abstract_figure_creator{
 public:
     [[nodiscard]] virtual figure *create() const = 0;
+    virtual ~abstract_figure_creator() = default;
 
 };
 
@@ -29,4 +30,6 @@ public:
     }
 
     [[nodiscard]] figure *create(figures fig_type) const;
+
+    ~figure_factory();
 };

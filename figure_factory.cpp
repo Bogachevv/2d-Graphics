@@ -7,3 +7,9 @@ figure *figure_factory::create(figures fig_type) const {
     }
     return it->second->create();
 }
+
+figure_factory::~figure_factory() {
+    for (auto it = factory_.begin(); it != factory_.end(); ++it){
+        delete (it->second);
+    }
+}

@@ -32,7 +32,7 @@ int main() {
     rect.set_height(1.0);
 
 
-    for (uint32_t t = 0; t < 10000; ++t){
+    for (uint32_t t = 0; t < 10; ++t){
         rect.rotate(0.1);
         rect.set_width(1 + 0.9 * sin(t / (2.0*M_PI * 2.0)));
         rect.set_height(1 + 0.9 * sin(t / (2.0*M_PI * 2.0)));
@@ -41,7 +41,7 @@ int main() {
         c_sleep(50);
     }
 
-    c_sleep(50000);
+//    c_sleep(50000);
 
     return 0;
 }

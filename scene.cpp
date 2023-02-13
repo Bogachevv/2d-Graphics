@@ -14,8 +14,6 @@ void scene::redraw_frame() {
     scr.redraw();
 }
 
-//TODO:
-// Should I use my own destructor for the vector?
 scene::~scene() {
     for (auto it = figures_.begin(); it < figures_.end(); ++it){
         delete *it;

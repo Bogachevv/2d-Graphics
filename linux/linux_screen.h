@@ -8,6 +8,8 @@ public:
 
     void redraw() override;
 
+    void clear() override;
+
     void hide_cursor();
 
     ~linux_screen();
