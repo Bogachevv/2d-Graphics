@@ -8,6 +8,6 @@ if(WIN32)
 endif(WIN32)
 
 if(UNIX)
-    add_executable(2d_Graphics main.cpp screen.h linux/linux_screen.h screen.cpp linux/linux_screen.cpp figures.cpp figures.h complex.cpp complex.h figure_factory.cpp figure_factory.h scene.cpp scene.h includes.h)
+    add_executable(2d_Graphics main.cpp screen.h linux/linux_screen.h screen.cpp linux/linux_screen.cpp figures.cpp figures.h complex.cpp complex.h figure_factory.cpp figure_factory.h scene.cpp scene.h includes.h linux/linux_console.cpp linux/linux_console.h)
     target_link_libraries(${PROJECT_NAME} ncurses)
 endif(UNIX)
